@@ -1,0 +1,26 @@
+
+<!--#include file="base.asp"-->
+<!--#include file="JSON.asp"-->
+
+<%
+
+Dim myArray(13,1)
+sql = "SELECT * from voyant where etat <> '" & "OFF" & "' order by dispo desc"
+Set rs = Server.CreateObject("ADODB.Recordset")
+rs.Open sql, conn, 3, 3
+
+i= 0
+
+do while not rs.eof ' loop
+
+  myArray(i,0) = rs.fields("voyant")
+  myArray(i,1) = rs.fields("dispo")
+ i = i + 1
+
+ rs.movenext
+
+loop
+
+Response.Write toJSON(myArray)
+
+%>
